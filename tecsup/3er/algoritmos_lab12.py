@@ -95,12 +95,15 @@ class Arbol():
                 self.mostrar(nodo_actual.izquierda, count=count+1)
             
             for n in range(count):
-                print("-", end="")
+                # Par
                 if count % 2 == 0:
-                    pass
+                    print(" ", end="")
+                    print(nodo_actual.valor, end="")
+                # Impar
+                elif n == ((count / 2) - 0.5):
+                    print(nodo_actual.valor, end="")
                 else:
-                    if n == ((count / 2) + 0.5):
-                        print(nodo_actual.valor, end="")
+                    print(" ", end="")
             
             print(nodo_actual.valor)
             if nodo_actual.derecha is not None:
