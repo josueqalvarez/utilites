@@ -83,7 +83,7 @@ class Arbol():
             return []
         return [nodo] + self._nodos_preorden(nodo.izquierda) + self._nodos_preorden(nodo.derecha)
 
-    def mostrar(self, nodo_actual=None, count=1):
+    def mostrar(self, nodo_actual=None, count=2):
         if nodo_actual is None:
             nodo_actual = self.raiz
 
@@ -92,22 +92,24 @@ class Arbol():
             return
         else:
             if nodo_actual.izquierda is not None:
-                self.mostrar(nodo_actual.izquierda, count=count+1)
+                #print("-" * (count//2) + "/" + "-" * (count//2))
+                self.mostrar(nodo_actual.izquierda, count=count+2)
+                print("-" * (count//2) + "/" + "-" * (count//2))
+            else:
+                pass
+                #print("-" * (count//2) + "/" + "-" * (count//2))
             
             for n in range(count):
+               # print(nodo_actual.valor)
+                print("-", end="")
                 # Par
-                if count % 2 == 0:
-                    print(" ", end="")
+                if n == ((count / 2) - 1):
                     print(nodo_actual.valor, end="")
-                # Impar
-                elif n == ((count / 2) - 0.5):
-                    print(nodo_actual.valor, end="")
-                else:
-                    print(" ", end="")
+                if n == count-1:
+                    print('\n')
             
-            print(nodo_actual.valor)
             if nodo_actual.derecha is not None:
-                self.mostrar(nodo_actual.derecha, count=count+1)
+                self.mostrar(nodo_actual.derecha, count=count+2)
 
 nuevo = Arbol()
 nuevo.insertar(5)
