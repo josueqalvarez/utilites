@@ -83,33 +83,59 @@ class Arbol():
             return []
         return [nodo] + self._nodos_preorden(nodo.izquierda) + self._nodos_preorden(nodo.derecha)
 
-    def mostrar(self, nodo_actual=None, count=2):
+
+    def mostrar(self, nodo_actual=None, count=2, arbol=None, respuesta=None):
         if nodo_actual is None:
             nodo_actual = self.raiz
+        if arbol is None:
+            arbol = []
+        if respuesta is None:
+            respuesta = ""
 
         if nodo_actual is None:
-            print("(arbol vacio)")
-            return
+            respuesta = "(arbol vacio)"
+
+    # 1. Si el nodo actual tiene hijo izquierdo, recursividad
+    # 2. Si el nodo actual no tiene hijo izquierdo, pero si derecho, recursividad 
+    # 3. Si el nodo actual no tiene hijo izquierdo ni derecho, guardar con numero de count y recursividad
+    #     
         else:
             if nodo_actual.izquierda is not None:
-                #print("-" * (count//2) + "/" + "-" * (count//2))
-                self.mostrar(nodo_actual.izquierda, count=count+2)
-                print("-" * (count//2) + "/" + "-" * (count//2))
-            else:
-                pass
-                #print("-" * (count//2) + "/" + "-" * (count//2))
-            
-            for n in range(count):
-               # print(nodo_actual.valor)
-                print("-", end="")
-                # Par
-                if n == ((count / 2) - 1):
-                    print(nodo_actual.valor, end="")
-                if n == count-1:
-                    print('\n')
-            
+                self.mostrar(nodo_actual.izquierda, count=count+2, arbol=arbol, respuesta=respuesta)
+
+
+            ingreso = False
+
+            for n in arbol:
+                if n["nivel"] == count:
+                    n["valor"] = str(n["valor"]) + "---" + str(nodo_actual.valor)
+                    ingreso = True
+                    break
+
+            if not ingreso:
+                arbol.append({ "nivel": count, "valor": nodo_actual.valor })
+                #print("Nodo actual: ", nodo_actual.valor, "Count: ", count)
+                print("Arbol: ", arbol)
+
+            for n in arbol:
+                if n["nivel"] == count:
+                    respuesta += respuesta + str(n["valor"]) + "\n"
+                #print(respuesta)
+
             if nodo_actual.derecha is not None:
-                self.mostrar(nodo_actual.derecha, count=count+2)
+                self.mostrar(nodo_actual.derecha, count=count+2, arbol=arbol, respuesta=respuesta)
+
+        return respuesta
+
+            # for n in range(count):
+            #    # print(nodo_actual.valor)
+            #     print("-", end="")
+            #     # Par
+            #     if n == ((count / 2) - 1):
+            #         print(nodo_actual.valor, end="")
+            #     if n == count-1:
+            #         print('\n')
+            
 
 nuevo = Arbol()
 nuevo.insertar(5)
@@ -117,5 +143,8 @@ nuevo.insertar(3)
 nuevo.insertar(7)
 nuevo.insertar(2)
 nuevo.insertar(4)
+nuevo.insertar(6)
+nuevo.insertar(9)
 
-nuevo.mostrar()
+print(nuevo.mostrar())
+print("hello")
